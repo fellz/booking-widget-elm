@@ -1,0 +1,769 @@
+/* Design tokens — single source of truth for colors, spacing and motion.
+   Theme switching flips a small set of semantic variables via [data-theme]. */
+
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  --transition-fast: 140ms ease;
+  --transition-base: 220ms ease;
+
+  /* Brand accent stays constant across themes. */
+  --accent: #4f46e5;
+  --accent-strong: #4338ca;
+  --accent-contrast: #ffffff;
+  --accent-soft: rgba(79, 70, 229, 0.12);
+  --danger: #dc2626;
+}
+
+:root,
+:root[data-theme='light'] {
+  --bg: #f4f5fb;
+  --surface: #ffffff;
+  --surface-muted: #f1f2f8;
+  --border: #e3e5ef;
+  --text: #1b1c28;
+  --text-muted: #6b6d80;
+  --shadow: 0 12px 40px rgba(27, 28, 40, 0.1);
+}
+
+:root[data-theme='dark'] {
+  --bg: #14151d;
+  --surface: #1d1f2a;
+  --surface-muted: #262936;
+  --border: #313446;
+  --text: #eceef6;
+  --text-muted: #9a9db2;
+  --shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+  transition:
+    background var(--transition-base),
+    color var(--transition-base);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- Page (App.vue) ---------- */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-5);
+}
+
+.page__footer {
+  font-size: 0.85rem;
+}
+
+.page__footer a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.page__footer a:hover {
+  color: var(--accent);
+}
+
+/* ---------- UiButton ---------- */
+.ui-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast),
+    opacity var(--transition-fast);
+}
+
+.ui-button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.ui-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ui-button--block {
+  flex: 1;
+  width: 100%;
+}
+
+.ui-button--primary {
+  padding: var(--space-3) var(--space-4);
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 1rem;
+}
+
+.ui-button--primary:hover:not(:disabled) {
+  background: var(--accent-strong);
+}
+
+.ui-button--ghost {
+  padding: var(--space-3) var(--space-4);
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.ui-button--ghost:hover:not(:disabled) {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent-soft);
+}
+
+.ui-button--icon {
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  color: var(--text);
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.ui-button--icon:hover:not(:disabled) {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* ---------- UiBadge ---------- */
+.ui-badge {
+  font-size: 0.82rem;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.ui-badge--muted {
+  color: var(--text-muted);
+}
+
+.ui-badge--danger {
+  color: var(--danger);
+  white-space: normal;
+}
+
+.ui-badge--accent {
+  color: var(--accent);
+}
+
+/* ---------- UiSurface ---------- */
+.ui-surface {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border-radius: var(--radius-md);
+  color: var(--text);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.ui-surface--surface {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+}
+
+.ui-surface--muted {
+  background: var(--surface-muted);
+  border: 1.5px solid transparent;
+}
+
+.ui-surface--pad-sm {
+  padding: var(--space-3);
+}
+
+.ui-surface--pad-md {
+  padding: var(--space-4);
+}
+
+.ui-surface--interactive {
+  cursor: pointer;
+}
+
+.ui-surface--interactive:hover:not(:disabled) {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.ui-surface--interactive:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ui-surface--selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* ---------- UiStepper ---------- */
+.ui-stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--surface-muted);
+  border-radius: var(--radius-md);
+  padding: var(--space-1);
+}
+
+.ui-stepper__value {
+  min-width: 96px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* ---------- UiSegmented ---------- */
+.ui-segmented {
+  display: inline-flex;
+  background: var(--surface-muted);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+}
+
+.ui-segmented__option {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  padding: var(--space-1) var(--space-2);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.ui-segmented__option--active {
+  background: var(--surface);
+  color: var(--accent);
+}
+
+/* ---------- UiStack / UiSplit ---------- */
+.ui-stack {
+  display: flex;
+  min-width: 0;
+}
+
+.ui-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+@media (max-width: 620px) {
+  .ui-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- UiSkeleton ---------- */
+.ui-skeleton {
+  width: 100%;
+  background: linear-gradient(
+    100deg,
+    var(--surface-muted) 30%,
+    var(--border) 50%,
+    var(--surface-muted) 70%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* ---------- UiSteps ---------- */
+.steps {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.steps__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.steps__item:not(:last-child) {
+  flex: 1;
+}
+
+.steps__item:not(:last-child)::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+  margin: 0 var(--space-2);
+}
+
+.steps__item--done:not(:last-child)::after {
+  background: var(--accent-soft);
+}
+
+.steps__node {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: var(--text-muted);
+}
+
+button.steps__node {
+  cursor: pointer;
+}
+
+.steps__marker {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface-muted);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.steps__item--active .steps__marker {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.steps__item--done .steps__marker {
+  background: var(--accent-soft);
+  border-color: transparent;
+  color: var(--accent);
+}
+
+.steps__label {
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.steps__item--active .steps__label,
+.steps__item--done .steps__label {
+  color: var(--text);
+}
+
+.steps__item--active .steps__label {
+  font-weight: 600;
+}
+
+@media (max-width: 460px) {
+  .steps__item:not(.steps__item--active) .steps__label {
+    display: none;
+  }
+}
+
+/* ---------- Widget (BookingWidget) ---------- */
+.widget {
+  width: 100%;
+  max-width: 760px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: var(--space-5);
+}
+
+.widget__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.widget__steps {
+  margin-bottom: var(--space-5);
+}
+
+.widget__title {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.widget__subtitle {
+  margin: var(--space-1) 0 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.widget__controls {
+  flex-shrink: 0;
+}
+
+.widget__review {
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+/* ---------- Calendar (DateRangePicker) ---------- */
+.calendar {
+  user-select: none;
+}
+
+.calendar__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.calendar__month {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.calendar__weekdays,
+.calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.calendar__weekdays {
+  margin-bottom: var(--space-2);
+}
+
+.calendar__weekdays span {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: capitalize;
+}
+
+.day {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.day:hover:not(:disabled):not(.day--start):not(.day--end) {
+  background: var(--accent-soft);
+}
+
+.day--muted {
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+.day--today {
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1.5px var(--border);
+}
+
+.day--disabled {
+  color: var(--text-muted);
+  opacity: 0.3;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.day--occupied {
+  opacity: 1;
+  color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 10%, transparent);
+  text-decoration: line-through;
+}
+
+.day--in-range {
+  background: var(--accent-soft);
+  border-radius: 0;
+}
+
+.day--start,
+.day--end {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 600;
+}
+
+.day--start {
+  border-top-left-radius: var(--radius-sm);
+  border-bottom-left-radius: var(--radius-sm);
+}
+
+.day--end {
+  border-top-right-radius: var(--radius-sm);
+  border-bottom-right-radius: var(--radius-sm);
+}
+
+.calendar__summary {
+  margin: var(--space-4) 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  min-height: 1.2em;
+}
+
+.calendar__legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.calendar__legend-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--danger) 25%, transparent);
+}
+
+.calendar__spinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- Guests (GuestSelector) ---------- */
+.guests__label {
+  font-weight: 600;
+}
+
+.guests__unit {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* ---------- Rooms (RoomList) ---------- */
+.rooms__title {
+  font-size: 1rem;
+  margin: 0 0 var(--space-3);
+}
+
+.rooms__grid {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.rooms__error {
+  text-align: center;
+}
+
+/* ---------- RoomCard ---------- */
+.room__image {
+  flex: 0 0 132px;
+  width: 132px;
+  align-self: stretch;
+  min-height: 116px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  display: block;
+}
+
+.room__body {
+  flex: 1;
+}
+
+.room__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.room__name {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.room__desc {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.room__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: auto;
+}
+
+.room__price {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.room__price small {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.room__check {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 460px) {
+  .room .ui-stack--room {
+    flex-direction: column;
+  }
+
+  .room__image {
+    flex-basis: auto;
+    width: 100%;
+    height: 120px;
+  }
+}
+
+/* ---------- BookingSummary ---------- */
+.summary__row--muted {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.summary__row--total {
+  font-weight: 700;
+  font-size: 1.15rem;
+  padding-top: var(--space-2);
+  border-top: 1px dashed var(--border);
+}
+
+.summary__hint {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ---------- ConfirmationView ---------- */
+.confirm {
+  text-align: center;
+  padding: var(--space-4) var(--space-2);
+}
+
+.confirm__badge {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 1.8rem;
+  animation: pop var(--transition-base) ease;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.confirm__title {
+  margin: 0;
+}
+
+.confirm__details {
+  width: 100%;
+  text-align: left;
+}
+
+.confirm__key {
+  color: var(--text-muted);
+}
+
+.confirm__value {
+  font-weight: 600;
+}
+
+.confirm__text {
+  color: var(--text-muted);
+  margin: 0;
+}

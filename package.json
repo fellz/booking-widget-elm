@@ -1,0 +1,21 @@
+{
+  "name": "booking-widget-elm",
+  "version": "1.0.0",
+  "description": "Демо-виджет бронирования номера в отеле — Elm (The Elm Architecture)",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "elm-test",
+    "typecheck": "elm make src/Main.elm --output=/dev/null",
+    "lint": "elm-format --validate src tests"
+  },
+  "devDependencies": {
+    "elm-format": "^0.8.7",
+    "elm-test": "^0.19.1-revision12",
+    "vite": "^6.0.7",
+    "vite-plugin-elm": "^3.0.1"
+  }
+}
